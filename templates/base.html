@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>严寻书</title>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+            
+        
+        .recommend h2 {
+            color:orange;
+        }
+        .dropdown:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .dropdown>.dropdown-toggle:active {
+            pointer-events: none;
+        }
+        .col:hover {
+            box-shadow: 0 3px 5px;
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+    <!-- 头部标题 -->
+    <div class="jumbotron text-center bg-dark fixed-top" >
+        
+            <!-- 导航栏部分 -->
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                    <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static "logo1.png" %}" alt="" width="80px" height="80px"></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                        <ul class="navbar-nav">
+                            {% for cate, values in cates.items %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle mt-0" data-toggle="dropdown" href="#">{{ cate.name }}</a>
+                                    <div class="dropdown-menu">
+                                        {% for value in values %}
+                                        
+                                        <a class="dropdown-item" href="{% url 'index' %}clist/{{ value.id }}">{{ value.name }}</a>
+                                        <div class="dropdown-divider"></div>
+                                        {% endfor %}
+                                    </div>
+                            </li>
+                            {% endfor %}
+                            
+                        
+                        </ul>
+                            
+                            
+                    </div>  
+                    <!-- 搜索框 -->
+                    <form class="form-inline" action="{% url 'index' %}s/">
+                        <input class="form-control mr-sm-2" name="search" type="search" placeholder="输入关键词" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <!-- 搜索框结束 -->
+                </nav>
+                <!-- 导航栏结束 -->
+        </div>
+    </div>
+    <!-- 头部标题结束 -->
+
+    <!-- 广告滚动栏 -->
+        <div class="container text-center bg-light" style="margin-top: 300px;">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                {% for ban in banner %}
+                {% if ban.is_active %}
+                <div class="carousel-item active">
+                    <a href="{{ ban.link_url }}">
+                        <img src="{% url 'index' %}media/{{ ban.img }}" class="d-block w-100" alt="...">
+                    </a>                
+                </div>
+                {% else %}
+                <div class="carousel-item">
+                    <a href="{{ ban.link_url }}">
+                    <img src="{% url 'index' %}media/{{ ban.img }}" class="d-block w-100" alt="...">
+                    </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    <!-- 广告结束 -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- 随机推荐结束 -->
+    <!-- 底部内容 -->
+    <div class="jumbotron" style="margin-bottom:0">
+        <div class="firenurl">
+            
+            <div class="container">
+                <p><strong>@严寻书官方</strong></p>
+                <p><a href="https://jq.qq.com/?_wv=1027&k=A083Q5kI" target="_blank">联系我们</a></p>
+                <p>免责申明：本站资源来源于网络，仅供学习，切勿用于商业用途，概不负责。</p>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>

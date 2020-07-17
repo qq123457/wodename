@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="container" style="margin-top: 50px">
+    {% if list %}
+    <div class="recommend text-center">
+        <h2>搜索内容为：{{ ss }}</h2>
+    </div>
+    <div class="row">
+        {% for l in list %}
+        <div class="col">
+            <a href="{{ l.download }}" target="_blank">
+            <div class="media border p-3 be-shown" >
+                    <img src="{% url 'index' %}media/{{ l.img }}" alt="">
+                <div class="media-body" style="margin-left: 12px;">
+                    <h4 class="media-heading">
+                        {{ l.name }}
+                    </h4>
+                    <p>
+                        <strong>作者</strong>：{{ l.autor }}
+                     </p>
+                </div>
+            </div>
+            </a>
+        </div>
+
+        {% endfor %}
+        
+    </div>
+    {% else %}
+    <div class="recommend text-center">
+        <h2>没有内容为：{{ ss }}</h2>
+    </div>
+    {% endif %}
+    
+</div>
+{% endblock %}
